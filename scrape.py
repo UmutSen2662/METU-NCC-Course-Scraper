@@ -3,9 +3,9 @@ import requests, json
 
 def main():
     urls = [
+    "https://catalog.metu.edu.tr/fac_inst.php?fac_inst=995",
     "https://catalog.metu.edu.tr/fac_inst.php?fac_inst=996",
-    "https://catalog.metu.edu.tr/fac_inst.php?fac_inst=997",
-    "https://catalog.metu.edu.tr/fac_inst.php?fac_inst=998"
+    "https://catalog.metu.edu.tr/fac_inst.php?fac_inst=997"
     ]
 
     programs = []
@@ -29,6 +29,7 @@ def get_program_links(url):
     table_items = soup.find_all("td")
     raw_program_links = [item.a for item in table_items]
     program_links = ["https://catalog.metu.edu.tr/"+item["href"] for item in raw_program_links if item != None]
+    program_links += [link.replace("fac_prog", "prog").replace("program", "prog_courses") for link in program_links]
 
     return program_links
 
